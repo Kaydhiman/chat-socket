@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <!-- <html> -->
-
 <head>
     <title>chat module</title>
     <style>
@@ -74,7 +73,7 @@
     <h1 id=online>online user</h1>
     <h3 id="status"></h3>
     <ul id="messages"></ul>
-
+    
     <form id="form" action="">
         <input id="input" autocomplete="off" /><button>Send</button>
     </form>
@@ -87,6 +86,10 @@
             },
         });
 
+        const chatWithOne = (userID) => {
+            console.log("Hey " + userID)
+        }
+
         socket.on("connect", () => {
             console.log(socket.id); // x8WIv7-mJelg7on_ALbx
             console.log(socket.connected); // true
@@ -98,32 +101,17 @@
         let typingSatus = document.getElementById('typing');
         let onlineUser = document.getElementById('online');
 
-
         //Show who’s online.
         socket.on('online status', (name) => {
-            const data = name.filter(obj => obj[socket.id] === undefined)
+            const data = name.filter(obj => obj[socket.id] === undefined )
             // onlineUser.innerHTML = JSON.stringify(data);
 
             // document.title = socket.id
             onlineUser.innerHTML = "";
 
             data.forEach((e) => {
-                onlineUser.insertAdjacentHTML('beforeend', `<button data-id="${Object.keys(e)[0]}" class="user-btn">${Object.values(e)}</button>`)
-
-                document.querySelectorAll(".user-btn").forEach(btn => btn.addEventListener("click", (evnt) => {
-                    console.log("btn clickked", evnt.target.dataset.id)
-                    let data = {
-                        receiverId: evnt.target.dataset.id,
-                        message: 'hye how are you'
-                    }
-                    // send msg to individual user (private chat)
-                    socket.emit('private chat', data);
-                }))
+               onlineUser.insertAdjacentHTML('beforeend', `<button onclick="${chatWithOne}(${Object.keys(e)[0]})">${Object.values(e)}</button>` )
             })
-        })
-        // receive msg from sender (private chat)
-        socket.on('private chat', (data) => {
-            alert(`${data.message} from ${data.senderInfo.username}`)
         })
 
         socket.on('user connect', (msg) => {
@@ -139,7 +127,7 @@
         });
 
         input.addEventListener('blur', () => {
-            console.log('blur')
+            console.log('blurrrrrrrrrrrr')
             socket.emit('typing_status', 'Typing status')
         })
         form.addEventListener('submit', function (e) {

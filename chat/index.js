@@ -50,19 +50,6 @@ io.on('connection', (socket) => {
     console.log(msg)
     socket.broadcast.emit('typing_status', msg)
   })
-
-  // private chat event 
-  socket.on('private chat', (data => {
-    console.log('private chate event', data)
-    // sender name
-    data.senderInfo = {
-      userid: socket.id,
-      username: name
-    }
-    // send message to individual socketid (private message)
-    io.to(data.receiverId).emit('private chat', data);
-  }))
-
   socket.on('disconnect', () => {
     socket.broadcast.emit('user disconnect', `${name} disconnected.`)
     onlineUsers.pop(name);
