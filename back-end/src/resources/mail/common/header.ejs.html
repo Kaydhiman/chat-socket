@@ -1,0 +1,114 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title><%= $appName%></title>
+    <style type="text/css">
+        .backcofirm {
+            padding: 5px;
+            max-width: 70%;
+            min-height: 1px;
+            margin-top: 40px;
+            margin-left: 15%;
+            margin-right: 15%;
+            position: relative;
+            box-sizing: border-box;
+            background-color: #fff;
+            border: 5px solid #00384F;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+        }
+
+        .email {
+            min-height: 1px;
+            position: relative;
+            padding-left: 15px;
+            padding-right: 15px;
+            text-align: center;
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+        }
+
+        .email img {
+            width: 15%;
+            margin-top: 20px;
+        }
+
+        .textmain {
+            min-height: 1px;
+            position: relative;
+            padding-left: 15px;
+            padding-right: 15px;
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+        }
+
+        .textmain h4 {
+            color: black;
+            font-size: 16px;
+            font-weight: normal;
+        }
+
+        .usrpass {
+            position: relative;
+            padding-left: 15px;
+            padding-right: 15px;
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+        }
+
+        .usrpass h4 {
+            color: black;
+            font-size: 16px;
+            font-weight: normal;
+        }
+
+
+        @media screen and (max-device-width: 640px) {
+
+            .email img {
+                width: 100%;
+                margin-top: 10px;
+            }
+
+            .textmain h4 {
+                font-size: 12px;
+            }
+
+            .usrpass h4 {
+                font-size: 12px;
+            }
+
+        }
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+            width: 100%;
+            border: 1px solid #ddd;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2
+        }
+    </style>
+</head>
+
+<body>
+    <div class="backcofirm">
+        <div class="email">
+            <div class="row text-center">
+                <img src="<%= $appUrl %>/assets/images/logo.png">
+            </div>
+        </div>
