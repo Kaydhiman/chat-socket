@@ -1,10 +1,13 @@
 const app = require('express')();
 const http = require('http');
-const server = http.createServer(app);
+// old implementation
+// const server = http.createServer(app);
 const mongoose = require('mongoose');
-const { Server } = require("socket.io");
-const io = new Server(server);
+// old implementation
+// const { Server } = require("socket.io");
+// const io = new Server(server);
 
+app.server = http.createServer(app);
 app.use(function (req, res, nxt) {
     req.pick = function (obj, ...properties) {
         if (!obj || Object.keys(obj).length <= 0) {
@@ -61,52 +64,11 @@ app.use(express.json());
 app.get('/chat', (req, res) => {
     res.sendFile(__dirname + '/demo.html');
 });
-let onlineUsers = [];
-io.on('connection', (socket) => {
-    const name = socket.handshake.auth.name;
-
-    onlineUsers.push({ [socket.id]: name });
-
-    // Broadcast a message to connected users when someone connects or disconnects.
-    socket.broadcast.emit('user connect', `${name} connected.`);
-
-    socket.on('chat message', (msg) => {
-        console.log(`Msg from client to server: ${msg}`)
-        io.emit('chat message', msg)
-    })
-    console.log({ onlineUsers })
-    //Show who’s online.
-    io.emit('online status', onlineUsers)
-
-    //Add “{user} is typing” functionality.
-    socket.on('typing', (msg) => {
-        console.log(msg)
-        socket.broadcast.emit('typing', msg)
-    })
-    socket.on('typing_status', (msg) => {
-        console.log(msg)
-        socket.broadcast.emit('typing_status', msg)
-    })
-
-    // private chat event 
-    socket.on('private chat', (data => {
-        console.log('private chate event', data)
-        // sender name
-        data.senderInfo = {
-            userid: socket.id,
-            username: name
-        }
-        // send message to individual socketid (private message)
-        io.to(data.receiverId).emit('private chat', data);
-    }))
-
-    socket.on('disconnect', () => {
-        socket.broadcast.emit('user disconnect', `${name} disconnected.`)
-        onlineUsers.pop(name);
-        console.log(`${name} disconnected`);
-    });
-});
 
 server.listen(process.env.PORT, BIND, () => {
     console.log(`listening on *:${BIND}:${process.env.PORT}`);
 });
+module.exports = {
+    io,
+    app
+}
